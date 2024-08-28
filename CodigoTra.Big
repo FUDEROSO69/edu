@@ -1,0 +1,24 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt 
+
+# caminho arqui.
+df = pd.read_csv('dados_vendas.csv')
+
+print(df.head())
+
+print(df.describe())
+
+# Agrupe por produto e some as quantidades vendidas
+vendas_por_produto = df.groupby('Produto')['Quantidade'].sum().reset_index()
+
+# Ordenando do maior para o menor
+vendas_por_produto = vendas_por_produto.sort_values(by='Quantidade', ascending=False)
+
+# Criando o gráfico de barras
+plt.figure(figsize=(10, 6))
+sns.barplot(x='Quantidade', y='Produto', data=vendas_por_produto, palette='viridis')
+plt.xlabel('Quantidade Vendida')
+plt.ylabel('Produto')
+plt.title('Produtos Mais Vendidos')
+plt.show()
